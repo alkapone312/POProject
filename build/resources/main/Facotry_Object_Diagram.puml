@@ -1,0 +1,90 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+object window
+
+window : canvas = new factory();
+
+object factory
+
+factory : social = 10;
+factory : screws = 10;
+factory : constructions = 6;
+factory : products = 3;
+factory : budget = 20000.0;
+factory : map = new Map();
+factory : rynek = new Market();
+
+factory : ArrayList<Worker> workers = new ArrayList<>;
+factory : ArrayList<Machine> machines = new ArrayList<>;
+
+
+object map
+
+map : cMap = new char[][];
+
+object market
+
+market : priceBuy = 10;
+market : priceSell = random();
+
+object worker
+
+worker : x = FACTORY_ENTRY_X;
+worker : y = FACTORY_ENTRY_Y;
+worker : salary = 3000;
+worker : sanity = 50;
+worker : efficiency = 50;
+worker : isWorking = false;
+worker : expirience = 2;
+
+object welder
+
+welder : modifier = 2;
+welder : salary *= modifier;
+
+object turner
+
+turner : modifier = 1.5;
+turner : salary *= modifier;
+
+object fitter
+
+fitter : modifier = 0.8;
+fitter : salary *= modifier;
+
+
+object machine
+
+machine : healthPoints = 50 000;
+machine : progress = 0;
+machine : price = 60 000;
+machine : isOn = false;
+
+object weldingMachine
+
+object lathe
+
+object assemblyTable
+
+
+window *-- factory : draws factory
+factory --- map : one use to generate map
+factory --- market : use for prizes
+factory *-- worker : contains
+factory *-- machine : contains
+worker <|-- welder : child
+worker <|-- turner : child
+worker <|-- fitter :child
+
+machine <|-- weldingMachine : child
+machine <|-- lathe : child
+machine <|-- assemblyTable :child
+
+welder .. weldingMachine : work together
+turner .. lathe : work together
+fitter .. assemblyTable : work together
+
+
+
+@enduml
