@@ -1,0 +1,116 @@
+@startuml
+scale 1024 width
+scale 720 height
+
+class Window extends JFrame
+{
+    public Factory canvas;
+    public static void main(String args[])
+}
+
+class Factory extends JPanel
+{
+    private int social;
+    private int screws;
+    private int constructions;
+    private int products;
+    private double budget;
+
+    public ArrayList<Worker> workers;
+    public ArrayList<Machine> machines;
+
+    private Map map;
+    private Market market;
+
+    public void paintComponent();
+    public void draw();
+
+    public void drawMap();
+    public void update();
+
+
+}
+class Map
+{
+    public char[][] cMap;
+    public void draw();
+}
+
+class Market
+{
+    private double priceBuy;
+    private double priceSell;
+
+    public void sell();
+    public void buy();
+}
+
+class Worker
+{
+    private int x;
+    private int y;
+    private int salary;
+    private int sanity;
+    private int efficiency;
+    private bool isWorking;
+    private int expirience;
+
+    public void draw();
+    public void update();
+}
+
+class Welder extends Worker
+{
+    private double modifier;
+}
+
+class Turner extends Worker
+{
+    private double modifier;
+
+}
+
+class Fitter extends Worker
+{
+    private double modifier;
+}
+
+class Machine
+{
+    private int healthPoints;
+    private int progress;
+    private int price;
+    public bool isOn;
+
+    public void getPrice();
+    public void payForRepair();
+    public void repair();
+    public void isProductDone();
+    public void createNewProduct();
+}
+
+class WeldingMachine extends Machine
+{
+
+}
+
+class Lathe extends Machine
+{
+
+}
+
+class AssemblyTable extends Machine
+{
+
+}
+
+Window *-- Factory : contains
+Factory --- Map : association
+Factory --- Market
+Factory *-- Worker
+Factory *-- Machine
+
+Welder .. WeldingMachine
+Turner .. Lathe
+Fitter .. AssemblyTable : dependence
+@enduml
