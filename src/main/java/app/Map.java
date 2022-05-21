@@ -27,7 +27,7 @@ public class Map {
                 for (int y = 0; y < Reference.ROWS; y++) {
                     switch (cMap[x][y]){
                         default:
-                            color = new Color((int)(r.nextDouble()*255));
+                            color = new Color((int)(r.nextDouble()*255),(int)(r.nextDouble()*245),(int)(r.nextDouble()*215));
                             mapBufferGraphics.setColor(color);
                             mapBufferGraphics.fillRect(x*Reference.PIXEL_SIZE,y*Reference.PIXEL_SIZE, Reference.PIXEL_SIZE, Reference.PIXEL_SIZE);
                             break;
