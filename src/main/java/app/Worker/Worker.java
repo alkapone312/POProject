@@ -1,8 +1,8 @@
 package app.Worker;
 
-public class Worker {
-    private int x;
-    private int y;
+import app.SimulationObject;
+
+public class Worker extends SimulationObject {
     private int salary;
     private int sanity;
     private int efficiency;

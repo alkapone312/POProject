@@ -1,6 +1,8 @@
 package app.Machine;
 
-public class Machine {
+import app.SimulationObject;
+
+public class Machine extends SimulationObject {
     private int healthPoints;
     private int progress;
     private int pricec;
