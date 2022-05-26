@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class SimulationObject {
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
     private Color color;
 
     public SimulationObject()
