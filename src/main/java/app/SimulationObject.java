@@ -6,7 +6,7 @@ import java.util.Random;
 public class SimulationObject {
     protected int x;
     protected int y;
-    private Color color;
+    protected Color color;
 
     public SimulationObject()
     {

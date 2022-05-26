@@ -30,7 +30,7 @@ public class Map {
                     // On przelatuje przez wszystkie znaki jakie są w zmiennej cMap i może ją przerobić na konkretne kolory, dla każdego case'a po prostu trzeba dać inny kolor
                     switch (cMap[x][y]){
                         default:
-                            color = new Color(255);
+                            color = new Color(100,100,100);
                             break;
                     }
                     //tutaj kolor jest drukowany do mapki w odpowiednim x i y
