@@ -9,11 +9,6 @@ public class Worker extends SimulationObject {
     private boolean isWorking;
     private int experience;
 
-    public void draw()
-    {
-
-    }
-
     public void update()
     {
 
