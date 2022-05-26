@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.*;
+import java.util.Random;
 
 public class SimulationObject {
     private int x;
@@ -9,8 +10,9 @@ public class SimulationObject {
 
     public SimulationObject()
     {
-        this.x = 10;
-        this.y = 10;
+        Random r = new Random();
+        this.x = (int)(r.nextDouble()*Reference.COLS);
+        this.y = (int)(r.nextDouble()*Reference.ROWS);
         this.color = Color.RED;
     }
 

@@ -15,6 +15,7 @@ public class Window extends JFrame {
 
     public static void main (String[] args)
     {
+        //Creates window with canvas
         Window window = new Window();
         window.canvas = new Factory();
         window.canvas.setPreferredSize(new Dimension(Reference.WIDTH, Reference.HEIGHT));
@@ -27,6 +28,8 @@ public class Window extends JFrame {
         window.setResizable(false);
         //SimulationListener listener = new SimulationListener(window);
 
+
+        //Creates window with settings
         Window settings = new Window();
         settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         settings.setSize(200,window.getHeight());
@@ -36,12 +39,18 @@ public class Window extends JFrame {
         settings.setResizable(false);
         settings.setVisible(true);
 
+
+        //game loop
         while (true)
         {
+            //speed control from control panel
             speed = 202-2*settingsPanel.getSpeedValue();
+
             try { Thread.sleep(speed); } catch (Exception e){}
-            if(!settingsPanel.stopped)
+            if(!settingsPanel.stopped) {
+                //invoke main draw function with given context
                 window.canvas.draw(window.canvas.getGraphics2D());
+            }
         }
     }
 }
