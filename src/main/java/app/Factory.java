@@ -57,6 +57,7 @@ public class Factory extends JPanel {
 
         for(Worker worker : workers)
         {
+            worker.setWay();
             worker.update();
             worker.draw(g2);
         }

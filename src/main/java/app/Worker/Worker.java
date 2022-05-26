@@ -2,6 +2,7 @@ package app.Worker;
 
 import app.Reference;
 import app.SimulationObject;
+import app.Utils.PreferredRandom;
 
 import java.util.Random;
 
@@ -11,8 +12,9 @@ public class Worker extends SimulationObject {
     private int efficiency;
     private boolean isWorking;
     private int experience;
+    private int way;
 
-    Random r = new Random();
+    private Random r = new Random();
 
     public Worker()
     {
@@ -24,14 +26,51 @@ public class Worker extends SimulationObject {
     //all worker logic here
     public void update()
     {
-        int way = (int)(r.nextDouble()* Reference.NUM_OF_WAYS);
-        this.move(way);
+        this.move();
+    }
+
+    public void setWay()
+    {
+        this.way = (int)(this.r.nextDouble()* Reference.NUM_OF_WAYS);
+    }
+
+    public void setWay(SimulationObject obj)
+    {
+        double angle = -1;
+
+        double distanceX = this.getX() - obj.getX();
+        double distanceY = this.getY() - obj.getY();
+        angle = Math.abs(Math.toDegrees(Math.atan2(distanceY, distanceX)) - 180.0);
+
+        if(angle > 337.5)
+            this.way = Reference.RIGHT;
+        if(angle < 337.5)
+            this.way = Reference.DOWN_RIGHT;
+        if(angle < 292.5)
+            this.way = Reference.DOWN;
+        if(angle < 247.5)
+            this.way = Reference.DOWN_LEFT;
+        if(angle < 202.5)
+            this.way = Reference.LEFT;
+        if(angle < 157.5)
+            this.way = Reference.UP_LEFT;
+        if(angle < 112.5)
+            this.way = Reference.UP;
+        if(angle < 67.5)
+            this.way = Reference.UP_RIGHT;
+        if (angle < 22.5)
+            this.way = Reference.RIGHT;
+        if (angle < 0)
+            this.way = -1;
+
+        PreferredRandom pr = new PreferredRandom(Reference.NUM_OF_WAYS, this.way, 16);
+        this.way = pr.nextPrefferedInt();
     }
 
     //moves the worker in given way
-    public void move(int way)
+    public void move()
     {
-        switch (way)
+        switch (this.way)
         {
             case Reference.UP:
                 this.y--;
