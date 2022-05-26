@@ -14,6 +14,7 @@ public class Factory extends JPanel {
     private int constructions;
     private int products;
     private double budget;
+    private boolean worktime = true;
 
     public ArrayList<Worker> workers;
     public ArrayList<Machine> machines;
@@ -55,14 +56,32 @@ public class Factory extends JPanel {
     {
         this.map.draw(g2);
 
-        for(Worker worker : workers)
+        for(Worker worker : this.workers)
         {
-            worker.setWay();
+
+            if(this.worktime)
+            {
+                switch (worker.getClass().getSimpleName())
+                {
+                    case "Turner":
+                        worker.setWay(machines.get(0));
+                        break;
+                    case "Welder":
+                        worker.setWay(machines.get(1));
+                        break;
+                    case "Fitter":
+                        worker.setWay(machines.get(2));
+                        break;
+                }
+            }
+            else {
+                worker.setWay();
+            }
             worker.update();
             worker.draw(g2);
         }
 
-        for(Machine machine : machines)
+        for(Machine machine : this.machines)
         {
             machine.draw(g2);
         }
