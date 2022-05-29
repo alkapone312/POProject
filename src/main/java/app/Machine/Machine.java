@@ -1,14 +1,16 @@
 package app.Machine;
 
 import app.SimulationObject;
+import app.Worker.Worker;
 
 public class Machine extends SimulationObject {
     private int healthPoints;
     private int progress;
-    private int pricec;
+    private int price;
     public boolean isOn;
+    private Worker worker;
 
-    public void getPrive()
+    public void getPrice()
     {
 
     }
@@ -31,5 +33,10 @@ public class Machine extends SimulationObject {
     public void createNewProduct()
     {
 
+    }
+
+    public void setWorker(Worker w)
+    {
+        this.worker = w;
     }
 }

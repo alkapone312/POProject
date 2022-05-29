@@ -1,5 +1,6 @@
 package app.Worker;
 
+import app.Machine.Machine;
 import app.Reference;
 import app.SimulationObject;
 import app.Utils.PreferredRandom;
@@ -13,6 +14,7 @@ public class Worker extends SimulationObject {
     private boolean isWorking;
     private int experience;
     private int way;
+    private Machine workstand;
 
     private Random r = new Random();
 
@@ -103,6 +105,16 @@ public class Worker extends SimulationObject {
             default:
                 break;
         }
+    }
+
+    public void goWork()
+    {
+        this.setWay(this.workstand);
+    }
+
+    public void setWorkstand(Machine workstand)
+    {
+        this.workstand = workstand;
     }
 
 }

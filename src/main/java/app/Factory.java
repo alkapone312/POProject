@@ -1,6 +1,7 @@
 package app;
 
 import app.Machine.*;
+import app.Utils.HR;
 import app.Worker.*;
 
 import javax.swing.*;
@@ -45,6 +46,12 @@ public class Factory extends JPanel {
         this.machines.add(new Lathe());
         this.machines.add(new WeldingMachine());
         this.machines.add(new AssemblyTable());
+
+        for(int i = 0 ; i < 3 ; i++)
+        {
+            HR.setWorkstand(this.workers.get(i), this.machines.get(i));
+        }
+
     }
 
     public void paintComponent(Graphics g)
@@ -58,25 +65,11 @@ public class Factory extends JPanel {
 
         for(Worker worker : this.workers)
         {
-
             if(this.worktime)
-            {
-                switch (worker.getClass().getSimpleName())
-                {
-                    case "Turner":
-                        worker.setWay(machines.get(0));
-                        break;
-                    case "Welder":
-                        worker.setWay(machines.get(1));
-                        break;
-                    case "Fitter":
-                        worker.setWay(machines.get(2));
-                        break;
-                }
-            }
-            else {
+                worker.goWork();
+            else
                 worker.setWay();
-            }
+
             worker.update();
             worker.draw(g2);
         }
