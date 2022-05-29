@@ -16,7 +16,7 @@ public class Worker extends SimulationObject {
     private boolean isWorking;
     private int experience;
     private int way;
-    private Machine workstand;
+    protected Machine workstand;
     public boolean hasItem = false;
 
     private Random r = new Random();

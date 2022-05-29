@@ -8,7 +8,7 @@ public class Machine extends SimulationObject {
     private int progress;
     private int maxProgress = 100;
     private int price;
-    private Worker worker;
+    protected Worker worker;
 
     public void update()
     {
@@ -35,7 +35,7 @@ public class Machine extends SimulationObject {
 
     public boolean isProductDone()
     {
-        if(this.progress == this.maxProgress)
+        if(this.progress > this.maxProgress)
         {
             return true;
         }

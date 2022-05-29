@@ -1,5 +1,7 @@
 package app.Worker;
 
+import app.Factory;
+
 import java.awt.*;
 
 public class Fitter extends Worker{
@@ -9,5 +11,18 @@ public class Fitter extends Worker{
         this.makes = "products";
         //red
         this.color = new Color(210,30,0);
+    }
+
+    public void update()
+    {
+        if(Factory.screws > 1 && Factory.constructions > 1 && isNear(this.workstand))
+            if(this.workstand.isProductDone()) {
+                this.hasItem = true;
+                this.workstand.createNewProduct();
+                Factory.screws--;
+                Factory.constructions--;
+            }
+
+        this.move();
     }
 }

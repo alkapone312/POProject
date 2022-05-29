@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class Factory extends JPanel {
     private int social;
-    private int screws;
-    private int constructions;
-    private int products;
+    public static int screws;
+    public static int constructions;
+    public static int products;
     private double budget;
     private boolean worktime = true;
     private ArrayList<JLabel> labels;
@@ -101,9 +101,9 @@ public class Factory extends JPanel {
     private void createLabels()
     {
         this.labels = new ArrayList<>();
-        this.labels.add(new JLabel("Number of screws: " + this.screws));
-        this.labels.add(new JLabel("Number of constructions: " + this.constructions));
-        this.labels.add(new JLabel("Number of products: " + this.products));
+        this.labels.add(new JLabel("Number of screws: " + Factory.screws));
+        this.labels.add(new JLabel("Number of constructions: " + Factory.constructions));
+        this.labels.add(new JLabel("Number of products: " + Factory.products));
 
         for (int i = 0 ; i < this.labels.size(); i++)
         {
@@ -115,9 +115,9 @@ public class Factory extends JPanel {
 
     private void updateLabels()
     {
-        labels.get(0).setText("Number of screws: " + this.screws);
-        labels.get(1).setText("Number of constructions: " + this.constructions);
-        labels.get(2).setText("Number of products: " + this.products);
+        labels.get(0).setText("Number of screws: " + Factory.screws);
+        labels.get(1).setText("Number of constructions: " + Factory.constructions);
+        labels.get(2).setText("Number of products: " + Factory.products);
     }
 
     private void updateMagazine(Worker worker)
@@ -125,11 +125,11 @@ public class Factory extends JPanel {
         switch (worker.makes)
         {
             case "constructions":
-                this.constructions++;worker.hasItem = false;break;
+                Factory.constructions++;worker.hasItem = false;break;
             case "screws":
-                this.screws++;worker.hasItem = false;break;
+                Factory.screws++;worker.hasItem = false;break;
             case "products":
-                this.products++;worker.hasItem = false;break;
+                Factory.products++;worker.hasItem = false;break;
             default: break;
         }
         this.updateLabels();
