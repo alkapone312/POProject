@@ -1,5 +1,6 @@
 package app.Worker;
 
+import app.Factory;
 import app.Machine.Machine;
 import app.Reference;
 import app.SimulationObject;
@@ -8,6 +9,7 @@ import app.Utils.PreferredRandom;
 import java.util.Random;
 
 public class Worker extends SimulationObject {
+    public String makes;
     private int salary;
     private int sanity;
     private int efficiency;
@@ -15,6 +17,7 @@ public class Worker extends SimulationObject {
     private int experience;
     private int way;
     private Machine workstand;
+    public boolean hasItem = false;
 
     private Random r = new Random();
 
@@ -28,6 +31,12 @@ public class Worker extends SimulationObject {
     //all worker logic here
     public void update()
     {
+        if(isNear(this.workstand))
+            if(this.workstand.isProductDone()) {
+                this.hasItem = true;
+                this.workstand.createNewProduct();
+            }
+
         this.move();
     }
 
@@ -109,12 +118,14 @@ public class Worker extends SimulationObject {
 
     public void goWork()
     {
-        this.setWay(this.workstand);
+        if(this.hasItem)
+            this.setWay(Factory.magazine);
+        else
+            this.setWay(this.workstand);
     }
 
     public void setWorkstand(Machine workstand)
     {
         this.workstand = workstand;
     }
-
 }

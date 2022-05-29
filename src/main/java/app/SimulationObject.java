@@ -16,6 +16,14 @@ public class SimulationObject {
         this.color = Color.RED;
     }
 
+    public SimulationObject(int x,int y)
+    {
+        Random r = new Random();
+        this.x = x;
+        this.y = y;
+        this.color = Color.RED;
+    }
+
 
     public void draw(Graphics2D g2)
     {
@@ -29,6 +37,19 @@ public class SimulationObject {
         );
     }
 
+    public boolean isNear(SimulationObject obj)
+    {
+        if (obj.getX() <= this.getX()+1
+                        &&
+            obj.getX() >= this.getX()-1
+                        &&
+            obj.getY() <= this.getY()+1
+                        &&
+            obj.getY() >= this.getY()-1)
+            return true;
+        return false;
+    }
+
     public int getX()
     {
         return this.x;
@@ -37,5 +58,10 @@ public class SimulationObject {
     public int getY()
     {
         return this.y;
+    }
+
+    public void setColor(Color c)
+    {
+        this.color = c;
     }
 }
