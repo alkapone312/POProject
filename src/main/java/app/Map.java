@@ -3,7 +3,9 @@ package app;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
-
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 //MAP GENERATIONS IS BASED ON 2D PERLIN NOISE GENERATOR
 public class Map {
@@ -18,7 +20,21 @@ public class Map {
         this.mapBuffer = new BufferedImage(Reference.WIDTH, Reference.HEIGHT, BufferedImage.TYPE_INT_RGB);
         this.mapBufferGraphics = this.mapBuffer.createGraphics();
     }
-
+    public void fill_array_from_file() throws IOException {
+        try (BufferedReader czytacz = new BufferedReader(new FileReader("mapfile(128x96).txt"))) {
+            String line = czytacz.readLine();
+            int wiersz = 0;
+            while (line != null) {
+                for (int kolumna = 0; kolumna < line.length(); kolumna++) {
+                    cMap[wiersz][kolumna] = line.charAt(kolumna);
+                }
+                wiersz++;
+                line = czytacz.readLine();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void draw(Graphics2D g2)
     {
         Color color;
