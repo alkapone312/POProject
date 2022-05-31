@@ -10,7 +10,7 @@ import java.io.BufferedReader;
 //MAP GENERATIONS IS BASED ON 2D PERLIN NOISE GENERATOR
 public class Map {
     // TODO: Stworzenie mapy ze znaków ascii
-    private char[][] cMap = new char[Reference.COLS][Reference.ROWS];
+    private char[][] cMap = new char[Reference.COLS/Reference.PIXEL_SIZE][Reference.ROWS/Reference.PIXEL_SIZE];
     private BufferedImage mapBuffer;
     private Graphics2D mapBufferGraphics;
     private boolean mapBuffered = false;
@@ -40,8 +40,8 @@ public class Map {
         Color color;
         if(!mapBuffered) {
             Random r = new Random();
-            for (int x = 0; x < Reference.COLS; x++) {
-                for (int y = 0; y < Reference.ROWS; y++) {
+            for (int x = 0; x < Reference.COLS/Reference.PIXEL_SIZE; x++) {
+                for (int y = 0; y < Reference.ROWS/Reference.PIXEL_SIZE; y++) {
                     // TODO: Wykorzystać tego switcha do narysowania mapy
                     // On przelatuje przez wszystkie znaki jakie są w zmiennej cMap i może ją przerobić na konkretne kolory, dla każdego case'a po prostu trzeba dać inny kolor
                     switch (cMap[x][y]){
