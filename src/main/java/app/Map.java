@@ -45,6 +45,34 @@ public class Map {
                     // TODO: Wykorzystać tego switcha do narysowania mapy
                     // On przelatuje przez wszystkie znaki jakie są w zmiennej cMap i może ją przerobić na konkretne kolory, dla każdego case'a po prostu trzeba dać inny kolor
                     switch (cMap[x][y]){
+                        case 'a':
+                            color = new Color(0,0,0);
+                            break;
+                        case 'b':
+                        case 'f':
+                        case 'p':
+                            color = new Color(0,245,255);
+                            break;
+                        case 'c':
+                        case 'd':
+                        case 'e':
+                            color = new Color(117,104,104);
+                            break;
+                        case 'g':
+                        case 'i':
+                        case 'j':
+                        case 'o':
+                        case 'l':
+                            color = new Color(160,160,160);
+                            break;
+                        case 'h':
+                        case 'm':
+                        case 'k':
+                        case 'n':
+                            color = new Color(93,229,6);
+                            break;
+                        case 'q':
+                            color = new Color(164,120,34);
                         default:
                             color = new Color(100,100,100);
                             break;
