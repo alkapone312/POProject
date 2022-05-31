@@ -33,8 +33,8 @@ public class Map {
             }
         }catch (IOException e) {
             e.printStackTrace();
-        }
-    }
+        }//Funkcja nie funkcjonuje poprawnie ale dziala(nie wiem czy trzeba ja wywolac gdzies bo sie pogubilem)
+    }    //array cmap jest pusty pomimo jej
     public void draw(Graphics2D g2)
     {
         Color color;
