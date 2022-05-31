@@ -19,22 +19,35 @@ public class Map {
     {
         this.mapBuffer = new BufferedImage(Reference.WIDTH, Reference.HEIGHT, BufferedImage.TYPE_INT_RGB);
         this.mapBufferGraphics = this.mapBuffer.createGraphics();
+        this.fill_array_from_file("mapfile(128x96).txt");
     }
-    public void fill_array_from_file() throws IOException {
-        try (BufferedReader czytacz = new BufferedReader(new FileReader("mapfile(128x96).txt"))) {
-            String line = czytacz.readLine();
-            int wiersz = 0;
-            while (line != null) {
+
+    private void fill_array_from_file(String file) {
+        BufferedReader czytacz = null;
+        try {
+            czytacz = new BufferedReader(new FileReader(file));
+        } catch (IOException e) {
+            System.out.println("Błąd inicjacji bufora.");
+        }
+
+        String line = "";
+        int wiersz = 0;
+
+        try {
+            while (czytacz.ready()) {
+                try {
+                    line = czytacz.readLine();
+                } catch (IOException e) {
+                    System.out.println("Błąd odczytu pliku");
+                }
                 for (int kolumna = 0; kolumna < line.length(); kolumna++) {
-                    cMap[wiersz][kolumna] = line.charAt(kolumna);
+                    cMap[kolumna][wiersz] = line.charAt(kolumna);
                 }
                 wiersz++;
-                line = czytacz.readLine();
             }
-        }catch (IOException e) {
-            e.printStackTrace();
-        }//Funkcja nie funkcjonuje poprawnie ale dziala(nie wiem czy trzeba ja wywolac gdzies bo sie pogubilem)
-    }    //array cmap jest pusty pomimo jej
+        }
+        catch (IOException e) {System.out.println("Unable to read from buffer");}
+    }
     public void draw(Graphics2D g2)
     {
         Color color;
@@ -42,8 +55,6 @@ public class Map {
             Random r = new Random();
             for (int x = 0; x < Reference.COLS; x++) {
                 for (int y = 0; y < Reference.ROWS; y++) {
-                    // TODO: Wykorzystać tego switcha do narysowania mapy
-                    // On przelatuje przez wszystkie znaki jakie są w zmiennej cMap i może ją przerobić na konkretne kolory, dla każdego case'a po prostu trzeba dać inny kolor
                     switch (cMap[x][y]){
                         case 'a':
                             color = new Color(0,0,0);
