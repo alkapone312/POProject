@@ -15,8 +15,7 @@ public class Map {
     private Graphics2D mapBufferGraphics;
     private boolean mapBuffered = false;
 
-    public Map()
-    {
+    public Map() {
         this.mapBuffer = new BufferedImage(Reference.WIDTH, Reference.HEIGHT, BufferedImage.TYPE_INT_RGB);
         this.mapBufferGraphics = this.mapBuffer.createGraphics();
         this.fill_array_from_file("mapfile(128x96).txt");
@@ -45,42 +44,43 @@ public class Map {
                 }
                 wiersz++;
             }
+        } catch (IOException e) {
+            System.out.println("Unable to read from buffer");
         }
-        catch (IOException e) {System.out.println("Unable to read from buffer");}
     }
-    public void draw(Graphics2D g2)
-    {
+
+    public void draw(Graphics2D g2) {
         Color color;
-        if(!mapBuffered) {
+        if (!mapBuffered) {
             Random r = new Random();
             for (int x = 0; x < Reference.COLS; x++) {
                 for (int y = 0; y < Reference.ROWS; y++) {
-                    switch (cMap[x][y]){
+                    switch (cMap[x][y]) {
                         case 'a':
-                            color = new Color(0,0,0);
+                            color = new Color(0, 0, 0);
                             break;
                         case 'b':
-                            color = new Color(0,245,255);
+                            color = new Color(0, 245, 255);
                             break;
                         case 'c':
-                            color = new Color(100,100,100);
+                            color = new Color(100, 100, 100);
                             break;
                         case 'd':
-                            color = new Color(160,160,160);
+                            color = new Color(160, 160, 160);
                             break;
                         case 'e':
-                            color = new Color(93,229,6);
+                            color = new Color(93, 229, 6);
                             break;
                         case 'q':
-                            color = new Color(164,120,34);
+                            color = new Color(164, 120, 34);
                             break;
                         default:
-                            color = new Color(255,255,255);
+                            color = new Color(255, 255, 255);
                             break;
                     }
                     //tutaj kolor jest drukowany do mapki w odpowiednim x i y
                     mapBufferGraphics.setColor(color);
-                    mapBufferGraphics.fillRect(x*Reference.PIXEL_SIZE,y*Reference.PIXEL_SIZE, Reference.PIXEL_SIZE, Reference.PIXEL_SIZE);
+                    mapBufferGraphics.fillRect(x * Reference.PIXEL_SIZE, y * Reference.PIXEL_SIZE, Reference.PIXEL_SIZE, Reference.PIXEL_SIZE);
                 }
             }
             this.mapBuffered = true;
