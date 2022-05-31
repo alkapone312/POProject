@@ -60,33 +60,22 @@ public class Map {
                             color = new Color(0,0,0);
                             break;
                         case 'b':
-                        case 'f':
-                        case 'p':
                             color = new Color(0,245,255);
                             break;
                         case 'c':
-                        case 'd':
-                        case 'e':
-                            color = new Color(117,104,104);
+                            color = new Color(100,100,100);
                             break;
-                        case 'g':
-                        case 'i':
-                        case 'j':
-                        case 'o':
-                        case 'l':
+                        case 'd':
                             color = new Color(160,160,160);
                             break;
-                        case 'h':
-                        case 'm':
-                        case 'k':
-                        case 'n':
+                        case 'e':
                             color = new Color(93,229,6);
                             break;
                         case 'q':
                             color = new Color(164,120,34);
                             break;
                         default:
-                            color = new Color(100,100,100);
+                            color = new Color(255,255,255);
                             break;
                     }
                     //tutaj kolor jest drukowany do mapki w odpowiednim x i y
