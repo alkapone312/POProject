@@ -24,8 +24,8 @@ public class Worker extends SimulationObject {
     public Worker()
     {
         //spawn area for workers
-        this.x = (int)(r.nextDouble()*3) + Reference.COLS - 10;
-        this.y = (int)(r.nextDouble()*3) + 10;
+        this.x = r.nextInt(14) + 6;
+        this.y = r.nextInt(4) + Reference.ROWS - 3;
     }
 
     //all worker logic here
