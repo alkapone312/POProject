@@ -19,7 +19,7 @@ public class Factory extends JPanel {
     private ArrayList<JLabel> labels;
 
     public ArrayList<Worker> workers;
-    public ArrayList<Machine> machines;
+    public static ArrayList<Machine> machines;
 
     public static SimulationObject magazine;
 
