@@ -20,7 +20,7 @@ public class Factory extends JPanel {
 
     public ArrayList<Worker> workers;
     public static ArrayList<Machine> machines;
-
+    public ArrayList<ControlPoint> controlpoints;
     public static SimulationObject magazine;
 
     private BufferedImage buffer;
@@ -37,9 +37,10 @@ public class Factory extends JPanel {
         //initialize map instance
         this.map = new Map();
 
-        //initialize workers and machines
+        //initialize workers and machines and control points
         this.workers = new ArrayList<>();
         this.machines = new ArrayList<>();
+        this.controlpoints = new ArrayList<>();
 
         //initialize factory places
         Factory.magazine = new SimulationObject(10, 10);
@@ -59,6 +60,14 @@ public class Factory extends JPanel {
             HR.setWorkstand(this.workers.get(i), this.machines.get(i));
         }
 
+        //add control points in various places of factory
+        this.controlpoints.add(new ControlPoint(14,85,255,255,255));// entrance hallway
+        this.controlpoints.add(new ControlPoint(24,85,255,255,255));// entrance - long corridor entrance
+        this.controlpoints.add(new ControlPoint(44,85,255,255,255));// long corridor
+        this.controlpoints.add(new ControlPoint(63,85,255,255,255));// long corridor-social room entrance
+        this.controlpoints.add(new ControlPoint(44,72,255,255,255));// long corridor- factory room entrance
+        this.controlpoints.add(new ControlPoint(44,40,255,255,255));// factory room
+
         this.createLabels();
 
     }
@@ -73,6 +82,11 @@ public class Factory extends JPanel {
 
         this.map.draw(g2);
         Factory.magazine.draw(g2);
+
+        for(ControlPoint controlPoint : this.controlpoints)
+        {
+            controlPoint.draw(g2);
+        }
 
         for(Worker worker : this.workers)
         {
