@@ -22,7 +22,7 @@ public class Window extends JFrame {
         window.add(window.canvas);
         window.pack();
         window.setLocation(200,0);
-        window.setLocationRelativeTo(null);
+        //window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setResizable(false);
         //SimulationListener listener = new SimulationListener(window);

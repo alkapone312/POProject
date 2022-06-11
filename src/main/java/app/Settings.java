@@ -24,7 +24,7 @@ public class Settings extends JPanel implements ChangeListener, ActionListener {
         speedSld = createSlider(0, 100, 50, 25);
         speedSld.addChangeListener(this);
 
-        speedLabel = createLabel("      Szybkosc [%]      ");
+        speedLabel = createLabel("      Szybkość [%]      ");
 
         stopBtn = createButton("Stop");
         startBtn = createButton("Start");
