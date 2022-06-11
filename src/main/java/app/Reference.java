@@ -3,7 +3,7 @@ package app;
 public class Reference {
     public static final int WIDTH = 1024;
     public static final int HEIGHT = 768;
-    public static int PIXEL_SIZE = 8;
+    public static int PIXEL_SIZE = 4;
     public static final int ROWS = Reference.HEIGHT/Reference.PIXEL_SIZE;
     public static final int COLS = Reference.WIDTH/Reference.PIXEL_SIZE;
     public static final int UP = 0;
