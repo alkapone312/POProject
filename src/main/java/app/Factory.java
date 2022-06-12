@@ -17,14 +17,15 @@ public class Factory extends JPanel {
     public static int screws;
     public static int constructions;
     public static int products;
+    public static int dayTime = 0;
     public static SimulationObject magazine;
+    public static ArrayList<ControlPoint> entranceWorkPath;
+    public static ArrayList<ControlPoint> workSocialPath;
+    public static ArrayList<ControlPoint> socialEntrancePath;
 
     private int social;
     private double budget;
     private boolean worktime = true;
-    private ArrayList<ControlPoint> entranceWorkPath;
-    private ArrayList<ControlPoint> workSocialPath;
-    private ArrayList<ControlPoint> socialEntrancePath;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
     private Graphics2D g2;
@@ -58,17 +59,14 @@ public class Factory extends JPanel {
         }
 
         for (Worker worker : this.workers) {
-            if (this.worktime)
-                worker.goWork();
-            else
-                worker.setWay();
+            HR.workerRoutine(worker);
 
             if (worker.isNear(Factory.magazine) && worker.hasItem)
                 this.updateMagazine(worker);
 
-            worker.update();
-            if(map.getCharAtPos(worker.getX(), worker.getY()) == 'a')
+            if(worker.getX() > Reference.COLS-1 || worker.getY() > Reference.ROWS-1 || map.getCharAtPos(worker.getX(), worker.getY()) == 'a')
                 worker.revertMove();
+
             worker.draw(g2);
         }
 
@@ -78,6 +76,7 @@ public class Factory extends JPanel {
             machine.draw(g2);
         }
 
+        Factory.dayTime++;
         repaint();
     }
 
@@ -115,9 +114,9 @@ public class Factory extends JPanel {
         this.controlpoints = new ArrayList<>();
 
         //initialize factory paths
-        this.entranceWorkPath = new ArrayList<>();
-        this.socialEntrancePath = new ArrayList<>();
-        this.workSocialPath = new ArrayList<>();
+        Factory.entranceWorkPath = new ArrayList<>();
+        Factory.socialEntrancePath = new ArrayList<>();
+        Factory.workSocialPath = new ArrayList<>();
 
         //initialize factory magazine
         Factory.magazine = new SimulationObject(Reference.COLS - 5, 30);
@@ -158,25 +157,25 @@ public class Factory extends JPanel {
 
     private void setPaths() {
         //entrance - work path
-        this.entranceWorkPath.add(controlpoints.get(0));
-        this.entranceWorkPath.add(controlpoints.get(1));
-        this.entranceWorkPath.add(controlpoints.get(2));
-        this.entranceWorkPath.add(controlpoints.get(4));
-        this.entranceWorkPath.add(controlpoints.get(5));
+        Factory.entranceWorkPath.add(controlpoints.get(0));
+        Factory.entranceWorkPath.add(controlpoints.get(1));
+        Factory.entranceWorkPath.add(controlpoints.get(2));
+        Factory.entranceWorkPath.add(controlpoints.get(4));
+        Factory.entranceWorkPath.add(controlpoints.get(5));
 
         //work - social path
-        this.workSocialPath.add(controlpoints.get(5));
-        this.workSocialPath.add(controlpoints.get(4));
-        this.workSocialPath.add(controlpoints.get(2));
-        this.workSocialPath.add(controlpoints.get(3));
-        this.workSocialPath.add(controlpoints.get(6));
+        Factory.workSocialPath.add(controlpoints.get(5));
+        Factory.workSocialPath.add(controlpoints.get(4));
+        Factory.workSocialPath.add(controlpoints.get(2));
+        Factory.workSocialPath.add(controlpoints.get(3));
+        Factory.workSocialPath.add(controlpoints.get(6));
 
         //social - entrance path
-        this.socialEntrancePath.add(controlpoints.get(6));
-        this.socialEntrancePath.add(controlpoints.get(4));
-        this.socialEntrancePath.add(controlpoints.get(2));
-        this.socialEntrancePath.add(controlpoints.get(1));
-        this.socialEntrancePath.add(controlpoints.get(0));
+        Factory.socialEntrancePath.add(controlpoints.get(6));
+        Factory.socialEntrancePath.add(controlpoints.get(4));
+        Factory.socialEntrancePath.add(controlpoints.get(2));
+        Factory.socialEntrancePath.add(controlpoints.get(1));
+        Factory.socialEntrancePath.add(controlpoints.get(0));
     }
 
     private void createLabels() {

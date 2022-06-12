@@ -1,11 +1,13 @@
 package app.Worker;
 
+import app.ControlPoint;
 import app.Factory;
 import app.Machine.Machine;
 import app.Reference;
 import app.SimulationObject;
 import app.Utils.PreferredRandom;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Worker extends SimulationObject {
@@ -14,12 +16,15 @@ public class Worker extends SimulationObject {
     private int sanity;
     private int efficiency;
     private boolean isWorking;
+    private boolean isResting;
     private int experience;
     private int way;
     private int lastX;
     private int lastY;
     protected Machine workstand;
     public boolean hasItem = false;
+
+    public ArrayList<ControlPoint> path;
 
     private Random r = new Random();
 
@@ -28,6 +33,7 @@ public class Worker extends SimulationObject {
         //spawn area for workers
         this.x = r.nextInt(14) + 6;
         this.y = r.nextInt(4) + Reference.ROWS - 3;
+        this.path = new ArrayList<>();
     }
 
     //all worker logic here
@@ -39,6 +45,14 @@ public class Worker extends SimulationObject {
                 this.workstand.createNewProduct();
             }
         this.move();
+    }
+
+    public void goTroughPath() {
+        ControlPoint p = path.get(0);
+        if(this.getX() == p.getX() && this.getY() == p.getY())
+            this.path.remove(p);
+
+        this.setWay(p);
     }
 
     public void setWay()
@@ -136,5 +150,23 @@ public class Worker extends SimulationObject {
     public void setWorkstand(Machine workstand)
     {
         this.workstand = workstand;
+    }
+
+    public boolean isWorking() {
+        return this.isWorking;
+    }
+
+    public boolean isResting() {
+        return this.isResting;
+    }
+
+    public void setWorking() {
+        this.isResting = false;
+        this.isWorking = true;
+    }
+
+    public void setResting() {
+        this.isWorking = false;
+        this.isResting = true;
     }
 }
