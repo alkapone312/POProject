@@ -27,7 +27,7 @@ public class Factory extends JPanel {
     public static ArrayList<ControlPoint> socialEntrancePath;
 
     private int social;
-    private double budget;
+    private static double budget;
     private boolean worktime = true;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
@@ -208,5 +208,11 @@ public class Factory extends JPanel {
         labels.get(0).setText("Number of screws: " + Factory.screws);
         labels.get(1).setText("Number of constructions: " + Factory.constructions);
         labels.get(2).setText("Number of products: " + Factory.products);
+    }
+    public static double getBudget() {
+    	return budget;
+    }
+    public static void setBudget(double x) {
+    	budget = x;
     }
 }
