@@ -22,6 +22,9 @@ public class Factory extends JPanel {
     private int social;
     private double budget;
     private boolean worktime = true;
+    private ArrayList<ControlPoint> entranceWorkPath;
+    private ArrayList<ControlPoint> workSocialPath;
+    private ArrayList<ControlPoint> socialEntrancePath;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
     private Graphics2D g2;
@@ -32,9 +35,12 @@ public class Factory extends JPanel {
         //Creates buffer and graphics context for drawing
         this.buffer = new BufferedImage(Reference.WIDTH, Reference.HEIGHT, BufferedImage.TYPE_INT_RGB);
         this.g2 = buffer.createGraphics();
+
+        //init all simulation
         this.initFactoryFields();
         this.setStartingWorkstations();
         this.setControlPoints();
+        this.setPaths();
         this.createLabels();
     }
 
@@ -108,6 +114,11 @@ public class Factory extends JPanel {
         this.machines = new ArrayList<>();
         this.controlpoints = new ArrayList<>();
 
+        //initialize factory paths
+        this.entranceWorkPath = new ArrayList<>();
+        this.socialEntrancePath = new ArrayList<>();
+        this.workSocialPath = new ArrayList<>();
+
         //initialize factory magazine
         Factory.magazine = new SimulationObject(Reference.COLS - 5, 30);
         Factory.magazine.setColor(new Color(50, 50, 50));
@@ -141,6 +152,31 @@ public class Factory extends JPanel {
         this.controlpoints.add(new ControlPoint(63, 85, 255, 255, 255));// long corridor-social room entrance
         this.controlpoints.add(new ControlPoint(44, 72, 255, 255, 255));// long corridor- factory room entrance
         this.controlpoints.add(new ControlPoint(44, 40, 255, 255, 255));// factory room
+        this.controlpoints.add(new ControlPoint(83, 85, 255, 255, 255));// social room
+
+    }
+
+    private void setPaths() {
+        //entrance - work path
+        this.entranceWorkPath.add(controlpoints.get(0));
+        this.entranceWorkPath.add(controlpoints.get(1));
+        this.entranceWorkPath.add(controlpoints.get(2));
+        this.entranceWorkPath.add(controlpoints.get(4));
+        this.entranceWorkPath.add(controlpoints.get(5));
+
+        //work - social path
+        this.workSocialPath.add(controlpoints.get(5));
+        this.workSocialPath.add(controlpoints.get(4));
+        this.workSocialPath.add(controlpoints.get(2));
+        this.workSocialPath.add(controlpoints.get(3));
+        this.workSocialPath.add(controlpoints.get(6));
+
+        //social - entrance path
+        this.socialEntrancePath.add(controlpoints.get(6));
+        this.socialEntrancePath.add(controlpoints.get(4));
+        this.socialEntrancePath.add(controlpoints.get(2));
+        this.socialEntrancePath.add(controlpoints.get(1));
+        this.socialEntrancePath.add(controlpoints.get(0));
     }
 
     private void createLabels() {
