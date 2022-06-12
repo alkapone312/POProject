@@ -1,8 +1,13 @@
 package app.Worker;
 
 import app.Factory;
+import app.Reference;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Fitter extends Worker{
     private double modifier;
@@ -11,7 +16,7 @@ public class Fitter extends Worker{
         this.makes = "products";
         //red
         this.color = new Color(210,30,0);
-        this.name = "Worker1.png";
+        this.setSprite("Worker1.png");
     }
 
     public void update()
