@@ -2,12 +2,14 @@ package app;
 
 import app.Machine.*;
 import app.Utils.HR;
+import app.Utils.PerlinNoise;
 import app.Worker.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Factory extends JPanel {
     public ArrayList<Worker> workers;
@@ -18,6 +20,7 @@ public class Factory extends JPanel {
     public static int constructions;
     public static int products;
     public static int dayTime = 0;
+    public static int day = 0;
     public static SimulationObject magazine;
     public static ArrayList<ControlPoint> entranceWorkPath;
     public static ArrayList<ControlPoint> workSocialPath;
@@ -50,15 +53,25 @@ public class Factory extends JPanel {
     }
 
     public void draw(Graphics2D g2) {
-
-        this.map.draw(g2);
-        Factory.magazine.draw(g2);
-
-        for (ControlPoint controlPoint : this.controlpoints) {
-            controlPoint.draw(g2);
+        if (Factory.dayTime == 1) {
+            g2.setColor(Color.BLACK);
+            g2.fillRect(0, 0, Reference.WIDTH, Reference.HEIGHT);
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Calibri", Font.PLAIN, 28));
+            g2.drawString("Dzień: " + Factory.day, Reference.WIDTH/2-50, Reference.HEIGHT/2);
+            repaint();
+            try { Thread.sleep(2000); } catch (Exception e) {}
         }
 
+        if(Factory.dayTime > 8000) {
+            Factory.dayTime = 0;
+            Factory.day++;
+        }
+
+        this.map.draw(g2);
+
         for (Worker worker : this.workers) {
+
             HR.workerRoutine(worker);
 
             if (worker.isNear(Factory.magazine) && worker.hasItem)
@@ -138,7 +151,7 @@ public class Factory extends JPanel {
             this.map.machinesOcupiedCoordinates.setFirstFreeCoordinatesOcupied();
             machine.setX(x).setY(y);
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < this.workers.size(); i++) {
             HR.setWorkstand(this.workers.get(i), this.machines.get(i));
         }
     }
