@@ -18,24 +18,30 @@ public class Settings extends JPanel implements ChangeListener, ActionListener {
 
     JButton fastButton;
 
+    private static JSlider restSlider;
+    private static JLabel restLabel;
+    public static int restVal;
 
     public Settings()
     {
         speedSld = createSlider(0, 100, 50, 25);
         speedSld.addChangeListener(this);
-
         speedLabel = createLabel("      Szybkość [%]      ");
-
         stopBtn = createButton("Stop");
         startBtn = createButton("Start");
-
         fastButton = createButton("As fast as it can!");
+
+        restSlider = createSlider(0, 1000, 500, 250);
+        restSlider.addChangeListener(this);
+        restLabel = createLabel("     Czas odpoczynku     ");
 
         this.add(speedSld);
         this.add(speedLabel);
         this.add(stopBtn);
         this.add(startBtn);
         this.add(fastButton);
+        this.add(restSlider);
+        this.add(restLabel);
     }
 
     public JSlider createSlider(int min, int max, int value, int tickSpacing)
@@ -79,6 +85,11 @@ public class Settings extends JPanel implements ChangeListener, ActionListener {
         if(e.getSource().equals(speedSld))
         {
             this.speedVal = speedSld.getValue();
+        }
+
+        if(e.getSource().equals(restSlider))
+        {
+            this.restVal = restSlider.getValue();
         }
     }
 
