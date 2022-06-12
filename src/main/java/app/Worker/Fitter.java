@@ -11,6 +11,7 @@ public class Fitter extends Worker{
         this.makes = "products";
         //red
         this.color = new Color(210,30,0);
+        this.name = "Worker1.png";
     }
 
     public void update()
