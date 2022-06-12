@@ -66,6 +66,11 @@ public class Map {
         g2.drawImage(this.mapBuffer, 0, 0, null);
     }
 
+    public char getCharAtPos(int x, int y)
+    {
+        return this.cMap[x][y];
+    }
+
     private void fill_array_from_file(String file) {
         BufferedReader czytacz = null;
         try {

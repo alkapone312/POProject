@@ -61,6 +61,8 @@ public class Factory extends JPanel {
                 this.updateMagazine(worker);
 
             worker.update();
+            if(map.getCharAtPos(worker.getX(), worker.getY()) == 'a')
+                worker.revertMove();
             worker.draw(g2);
         }
 

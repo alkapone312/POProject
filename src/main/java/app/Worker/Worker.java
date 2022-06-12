@@ -16,6 +16,8 @@ public class Worker extends SimulationObject {
     private boolean isWorking;
     private int experience;
     private int way;
+    private int lastX;
+    private int lastY;
     protected Machine workstand;
     public boolean hasItem = false;
 
@@ -80,6 +82,8 @@ public class Worker extends SimulationObject {
     //moves the worker in given way
     public void move()
     {
+        lastX = this.x;
+        lastY = this.y;
         switch (this.way)
         {
             case Reference.UP:
@@ -113,6 +117,12 @@ public class Worker extends SimulationObject {
             default:
                 break;
         }
+    }
+
+    public void revertMove()
+    {
+        this.x = lastX;
+        this.y = lastY;
     }
 
     public void goWork()
