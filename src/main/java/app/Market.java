@@ -1,39 +1,36 @@
 package app;
+
 import java.util.Random;
+
 import app.Utils.PerlinNoise;
 
 
-public class Market{
+public class Market {
     private double priceSell;
     private double priceMaterial;
     private double bud;
-    private float[] noise;
-    
+    private float[] noiseBuy;
+    private float[] noiseSell;
+
 
     public Market() {
         this.bud = Factory.getBudget();
-        PerlinNoise p = new PerlinNoise();
-        this.noise = p.PerlinNoise1D(20,4,3);
-        
+        PerlinNoise p1 = new PerlinNoise();
+        PerlinNoise p2 = new PerlinNoise();
+        this.noiseBuy = p1.PerlinNoise1D(365, 4, 3);
+        this.noiseSell = p2.PerlinNoise1D(365, 4, 3);
+
         Factory.setBudget(bud);
-    }
-    
-    public void sell(double ProductPrice){
-        Random r = new Random();
-        this.priceSell = r.nextDouble(13);
-        
-        bud = bud+priceSell;
-        
     }
 
-    public void buy(double ProductPrice){
-        Random r = new Random();
-        int choose = r.nextInt(21);
-        this.priceMaterial = r.nextDouble(20)*noise[choose];
-        
-        bud = bud-priceMaterial;
-        
+    public void sell(double ProductPrice) {
+        this.priceSell = this.noiseSell[Factory.day % 365] * 13;
+        bud = bud + priceSell;
+    }
+
+    public void buy(double ProductPrice) {
+        this.priceMaterial = noiseBuy[Factory.day % 365] * 20;
+        bud = bud - priceMaterial;
         Factory.setBudget(bud);
-        
     }
 }
