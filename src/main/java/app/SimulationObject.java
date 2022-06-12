@@ -60,6 +60,18 @@ public class SimulationObject {
         return this.y;
     }
 
+    public SimulationObject setX(int x)
+    {
+        this.x = x;
+        return this;
+    }
+
+    public SimulationObject setY(int y)
+    {
+        this.y = y;
+        return this;
+    }
+
     public void setColor(Color c)
     {
         this.color = c;

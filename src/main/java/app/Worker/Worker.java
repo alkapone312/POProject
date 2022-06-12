@@ -36,7 +36,6 @@ public class Worker extends SimulationObject {
                 this.hasItem = true;
                 this.workstand.createNewProduct();
             }
-
         this.move();
     }
 

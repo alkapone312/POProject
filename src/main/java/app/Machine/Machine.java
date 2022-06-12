@@ -1,10 +1,7 @@
 package app.Machine;
 
-import app.Factory;
 import app.SimulationObject;
 import app.Worker.Worker;
-
-import javax.crypto.Mac;
 
 public class Machine extends SimulationObject {
     private int healthPoints;
@@ -12,57 +9,46 @@ public class Machine extends SimulationObject {
     private int maxProgress = 100;
     private int price;
     protected Worker worker;
-    Coordinates CoordinatesClassObject = new Coordinates();
-    int[][] coordinates = CoordinatesClassObject.copyarray();
-    public Machine(){
 
-        this.x = coordinates[Factory.machines.size()][0];
-        this.y = coordinates[Factory.machines.size()][1];
+    public Machine() {
+        this.worker = new Worker();
     }
-    public void update()
-    {
-        if (this.isNear(this.worker))
-        {
+
+    public void update() {
+        if (this.isNear(this.worker)) {
             progress++;
         }
     }
 
-    public void getPrice()
-    {
+    public void getPrice() {
 
     }
 
-    public void payForRepair()
-    {
+    public void payForRepair() {
 
     }
 
-    public void repair()
-    {
+    public void repair() {
 
     }
 
-    public boolean isProductDone()
-    {
-        if(this.progress > this.maxProgress)
-        {
+    public boolean isProductDone() {
+        if (this.progress > this.maxProgress) {
             return true;
         }
         return false;
     }
 
-    public void createNewProduct()
-    {
+    public void createNewProduct() {
         this.progress = 0;
     }
 
-    public void setWorker(Worker w)
-    {
+    public Worker getWorker() {
+        return this.worker;
+    }
+
+    public void setWorker(Worker w) {
         this.worker = w;
     }
 
-    public Worker getWorker()
-    {
-        return this.worker;
-    }
 }
