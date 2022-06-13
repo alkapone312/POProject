@@ -13,10 +13,11 @@ import java.util.Random;
 public class Worker extends SimulationObject {
     public String makes;
     private int salary;
-    public int sanity = 4000;
+    private int sanity = 4000;
+    private int maxsanity = this.sanity;
     private int chanceofdrop=0;
     private boolean isTired;
-    private int efficiency;
+    private double efficiency;
     private boolean isWorking;
     private boolean isResting;
     private int experience;
@@ -58,6 +59,7 @@ public class Worker extends SimulationObject {
             this.sanity++;
         }
         if (this.sanity==3500) this.isTired = false;
+        this.efficiency = this.sanity/this.maxsanity;
         this.move();
     }
 
@@ -176,7 +178,7 @@ public class Worker extends SimulationObject {
     public boolean isTired() {
         return this.isTired;
     }
-
+    public double getEfficiency(){ return this.efficiency; }
     public void setWorking() {
         this.isResting = false;
         this.isWorking = true;

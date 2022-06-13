@@ -3,20 +3,24 @@ package app.Machine;
 import app.SimulationObject;
 import app.Worker.Worker;
 
+import java.util.Random;
+
 public class Machine extends SimulationObject {
     private int healthPoints;
     private int progress;
     private int maxProgress = 100;
     private int price;
     protected Worker worker;
-
+    private Random r = new Random();
     public Machine() {
         this.worker = new Worker();
     }
 
     public void update() {
         if (this.isNear(this.worker)) {
-            progress++;
+            if (r.nextInt(100) < (25 + (int) 75 * this.worker.getEfficiency())) {
+                progress++;
+            }
         }
     }
 
