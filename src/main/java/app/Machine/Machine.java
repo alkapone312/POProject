@@ -8,7 +8,7 @@ import java.util.Random;
 public class Machine extends SimulationObject {
     private int healthPoints;
     private int progress;
-    private int maxProgress = 100;
+    private double maxProgress = 100;
     private int price;
     protected Worker worker;
     private Random r = new Random();
@@ -18,10 +18,10 @@ public class Machine extends SimulationObject {
 
     public void update() {
         if (this.isNear(this.worker)) {
-            if (r.nextInt(100) < (25 + (int) 75 * this.worker.getEfficiency())) {
-                progress++;
-            }
+            progress++;
         }
+
+        this.maxProgress = 100/this.worker.getEfficiency();
     }
 
     public void getPrice() {
