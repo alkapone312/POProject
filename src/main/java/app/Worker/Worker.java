@@ -18,7 +18,9 @@ import java.util.Random;
 public class Worker extends SimulationObject {
     public String makes;
     private int salary;
-    private int sanity;
+    public int sanity = 4000;
+    private int chanceofdrop=0;
+    public boolean isTired;
     private int efficiency;
     private boolean isWorking;
     private boolean isResting;
@@ -50,6 +52,18 @@ public class Worker extends SimulationObject {
                 this.hasItem = true;
                 this.workstand.createNewProduct();
             }
+        if(this.isWorking){
+            if (r.nextInt(100)< 60 + this.chanceofdrop){
+                this.sanity--;
+                this.chanceofdrop=0;
+            }
+            else this.chanceofdrop += 5;
+        }
+        if (this.sanity==100) this.isTired = true;
+        if(this.isResting){
+            this.sanity++;
+        }
+        if (this.sanity==1000) this.isTired = false;
         this.move();
     }
 
