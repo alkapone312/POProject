@@ -17,9 +17,12 @@ import java.util.Random;
 
 public class Worker extends SimulationObject {
     public String makes;
+    public boolean hasItem = false;
+
+    private BufferedImage workerSprite;
     private int salary;
-    private int sanity = 4000;
-    private int maxsanity = this.sanity;
+    private int sanity;
+    private int maxsanity;
     private int chanceofdrop=0;
     private boolean isTired;
     private double efficiency;
@@ -29,9 +32,9 @@ public class Worker extends SimulationObject {
     private int way;
     private int lastX;
     private int lastY;
+    private int timeHasPath = 0;
+
     protected Machine workstand;
-    public boolean hasItem = false;
-    BufferedImage workerSprite;
 
     public ArrayList<ControlPoint> path;
 
@@ -43,29 +46,19 @@ public class Worker extends SimulationObject {
         this.x = r.nextInt(14) + 6;
         this.y = r.nextInt(4) + Reference.ROWS - 3;
         this.path = new ArrayList<>();
+
+        this.sanity = 4000;
+        this.maxsanity = this.sanity;
+        this.efficiency = 1.0;
     }
 
     //all worker logic here
     public void update()
     {
-        if(isNear(this.workstand))
-            if(this.workstand.isProductDone()) {
-                this.hasItem = true;
-                this.workstand.createNewProduct();
-            }
-        if(this.isWorking){
-            if (r.nextInt(100)< 60 + this.chanceofdrop){
-                this.sanity--;
-                this.chanceofdrop=0;
-            }
-            else this.chanceofdrop += 5;
-        }
-        if (this.sanity==100) this.isTired = true;
-        if(this.isResting){
-            this.sanity++;
-        }
-        if (this.sanity==3500) this.isTired = false;
-        this.efficiency = this.sanity/this.maxsanity;
+        this.handleProduct();
+        this.handleSanity();
+        this.handleBuggedPath();
+
         this.move();
     }
 
@@ -74,6 +67,7 @@ public class Worker extends SimulationObject {
         if(this.getX() == p.getX() && this.getY() == p.getY())
             this.path.remove(p);
 
+        this.timeHasPath++;
         this.setWay(p);
     }
 
@@ -181,10 +175,13 @@ public class Worker extends SimulationObject {
     public boolean isResting() {
         return this.isResting;
     }
+
     public boolean isTired() {
         return this.isTired;
     }
+
     public double getEfficiency(){ return this.efficiency; }
+
     public void setWorking() {
         this.isResting = false;
         this.isWorking = true;
@@ -204,6 +201,61 @@ public class Worker extends SimulationObject {
             this.workerSprite = ImageIO.read(new File(fileName));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void handleProduct() {
+        if(isNear(this.workstand))
+            if(this.workstand.isProductDone()) {
+                this.hasItem = true;
+                this.workstand.createNewProduct();
+            }
+
+        if(this.getClass().getSimpleName() == "Fitter") {
+            if(Factory.screws > 1 && Factory.constructions > 1 && isNear(this.workstand))
+                if(this.workstand.isProductDone()) {
+                    this.hasItem = true;
+                    this.workstand.createNewProduct();
+                    Factory.screws--;
+                    Factory.constructions--;
+                }
+        }
+    }
+
+    private void handleSanity() {
+        if(Factory.dayTime == 0) {
+            this.sanity += r.nextDouble() * 400 + 800;
+        }
+        if(this.isWorking){
+            if (r.nextInt(100)< 60 + this.chanceofdrop){
+                this.sanity--;
+                this.chanceofdrop=0;
+            }
+            else this.chanceofdrop += 5;
+        }
+        if (this.sanity==100) {
+            this.isTired = true;
+        }
+        if(this.isResting) {
+            this.sanity++;
+        }
+        if (this.sanity==3500) {
+            this.isTired = false;
+        }
+        if(this.sanity > this.maxsanity) {
+            this.sanity = this.maxsanity;
+        }
+        this.efficiency = (double)this.sanity/(double)this.maxsanity;
+
+    }
+
+    private void handleBuggedPath() {
+        if(this.timeHasPath > 500 && this.path.size() > 0) {
+            this.path = new ArrayList<>();
+            this.timeHasPath = 0;
+        }
+        if(this.path.size() == 0) {
+            this.timeHasPath = 0;
         }
     }
 }
