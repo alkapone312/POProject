@@ -34,6 +34,7 @@ public class Settings extends JPanel implements ChangeListener, ActionListener {
         restSlider = createSlider(0, 1000, 500, 250);
         restSlider.addChangeListener(this);
         restLabel = createLabel("     Czas odpoczynku     ");
+        Settings.restVal = this.restSlider.getMaximum()/2;
 
         this.add(speedSld);
         this.add(speedLabel);
