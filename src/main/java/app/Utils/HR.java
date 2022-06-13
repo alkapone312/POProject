@@ -24,37 +24,39 @@ public class HR {
                 worker.setY(r.nextInt(4) + Reference.ROWS - 3);
                 worker.path = new ArrayList<>();
             }
-            if (!worker.isTired()){
-                if (!worker.isWorking() && Factory.dayTime < 3000) {
-                    worker.path = (ArrayList<ControlPoint>) Factory.entranceWorkPath.clone();
-                    worker.setWorking();
-                }
 
-                if (
-                    !worker.isResting()
-                            && Factory.dayTime > 4000 - Settings.restVal
-                            && Factory.dayTime < 4000
-                 ) {
-                    worker.path = (ArrayList<ControlPoint>) Factory.workSocialPath.clone();
-                    worker.setResting();
-                }
-
-                if (!worker.isWorking() && Factory.dayTime > 4000) {
-                    worker.path = (ArrayList<ControlPoint>) Factory.workSocialPath.clone();
-                    Collections.reverse(worker.path);
-                    worker.setWorking();
-                }
-
-                if (!worker.isResting() && Factory.dayTime > 7800) {
-                    worker.path = (ArrayList<ControlPoint>) Factory.entranceWorkPath.clone();
-                    Collections.reverse(worker.path);
-                    worker.setResting();
-                }
+            if (!worker.isWorking() && Factory.dayTime < 3000) {
+                worker.path = (ArrayList<ControlPoint>) Factory.entranceWorkPath.clone();
+                worker.setWorking();
             }
-            else if (!worker.isResting()){
+
+            if (
+                !worker.isResting()
+                        && Factory.dayTime > 4000 - Settings.restVal
+                        && Factory.dayTime < 4000
+             ) {
                 worker.path = (ArrayList<ControlPoint>) Factory.workSocialPath.clone();
                 worker.setResting();
             }
+
+            if (!worker.isWorking() && Factory.dayTime > 4000) {
+                worker.path = (ArrayList<ControlPoint>) Factory.workSocialPath.clone();
+                Collections.reverse(worker.path);
+                worker.setWorking();
+            }
+
+            if (!worker.isResting() && Factory.dayTime > 7800) {
+                worker.path = (ArrayList<ControlPoint>) Factory.entranceWorkPath.clone();
+                Collections.reverse(worker.path);
+                worker.setResting();
+            }
+        }
+        if (!worker.isTired()) {
+                worker.setHangingAround(false);
+        }
+
+        if(worker.isTired()) {
+            worker.setHangingAround(true);
         }
 
         if(worker.isWorking()) {

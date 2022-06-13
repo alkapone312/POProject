@@ -28,6 +28,7 @@ public class Worker extends SimulationObject {
     private double efficiency;
     private boolean isWorking;
     private boolean isResting;
+    private boolean isHangingAround;
     private int experience;
     private int way;
     private int lastX;
@@ -182,6 +183,10 @@ public class Worker extends SimulationObject {
 
     public double getEfficiency(){ return this.efficiency; }
 
+    public boolean isHangingAround() {
+        return this.isHangingAround;
+    }
+
     public void setWorking() {
         this.isResting = false;
         this.isWorking = true;
@@ -190,6 +195,10 @@ public class Worker extends SimulationObject {
     public void setResting() {
         this.isWorking = false;
         this.isResting = true;
+    }
+
+    public void setHangingAround(boolean b) {
+        this.isHangingAround = b;
     }
 
     public void draw(Graphics2D g2) {
@@ -233,11 +242,14 @@ public class Worker extends SimulationObject {
             }
             else this.chanceofdrop += 5;
         }
+        if(this.sanity < 100) {
+            this.sanity = 100;
+        }
         if (this.sanity==100) {
             this.isTired = true;
         }
         if(this.isResting) {
-            this.sanity++;
+            this.sanity += 4;
         }
         if (this.sanity==3500) {
             this.isTired = false;
@@ -246,6 +258,7 @@ public class Worker extends SimulationObject {
             this.sanity = this.maxsanity;
         }
         this.efficiency = (double)this.sanity/(double)this.maxsanity;
+
 
     }
 

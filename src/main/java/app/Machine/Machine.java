@@ -17,10 +17,9 @@ public class Machine extends SimulationObject {
     }
 
     public void update() {
-        if (this.isNear(this.worker)) {
+        if (this.isNear(this.worker) && !worker.isHangingAround()) {
             progress++;
         }
-
         this.maxProgress = 100/this.worker.getEfficiency();
     }
 
