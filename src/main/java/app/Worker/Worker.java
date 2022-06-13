@@ -15,7 +15,7 @@ public class Worker extends SimulationObject {
     private int salary;
     public int sanity = 4000;
     private int chanceofdrop=0;
-    public boolean isTired;
+    private boolean isTired;
     private int efficiency;
     private boolean isWorking;
     private boolean isResting;
@@ -57,7 +57,7 @@ public class Worker extends SimulationObject {
         if(this.isResting){
             this.sanity++;
         }
-        if (this.sanity==1000) this.isTired = false;
+        if (this.sanity==3500) this.isTired = false;
         this.move();
     }
 
@@ -172,6 +172,9 @@ public class Worker extends SimulationObject {
 
     public boolean isResting() {
         return this.isResting;
+    }
+    public boolean isTired() {
+        return this.isTired;
     }
 
     public void setWorking() {

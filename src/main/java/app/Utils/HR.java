@@ -16,7 +16,7 @@ public class HR {
 
     public static void workerRoutine(Worker worker) {
         if(worker.path.size() == 0 || Factory.dayTime == 0) {
-            if (!worker.isTired){
+            if (!worker.isTired()){
                 if (!worker.isWorking() && Factory.dayTime < 3000) {
                     worker.path = (ArrayList<ControlPoint>) Factory.entranceWorkPath.clone();
                     worker.setWorking();
