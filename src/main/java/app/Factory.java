@@ -80,7 +80,7 @@ public class Factory extends JPanel {
             if(worker.getX() > Reference.COLS-1 || worker.getY() > Reference.ROWS-1 || map.getCharAtPos(worker.getX(), worker.getY()) == 'a')
                 worker.revertMove();
 
-            worker.drawWorker(g2);
+            worker.draw(g2);
         }
 
         for (Machine machine : this.machines) {

@@ -7,6 +7,11 @@ import app.Reference;
 import app.SimulationObject;
 import app.Utils.PreferredRandom;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,6 +31,7 @@ public class Worker extends SimulationObject {
     private int lastY;
     protected Machine workstand;
     public boolean hasItem = false;
+    BufferedImage workerSprite;
 
     public ArrayList<ControlPoint> path;
 
@@ -187,5 +193,17 @@ public class Worker extends SimulationObject {
     public void setResting() {
         this.isWorking = false;
         this.isResting = true;
+    }
+
+    public void draw(Graphics2D g2) {
+        g2.drawImage(this.workerSprite, null, Reference.PIXEL_SIZE*this.x, Reference.PIXEL_SIZE*this.y);
+    }
+
+    protected void setSprite(String fileName) {
+        try {
+            this.workerSprite = ImageIO.read(new File(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

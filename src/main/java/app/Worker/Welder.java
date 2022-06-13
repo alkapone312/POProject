@@ -9,6 +9,6 @@ public class Welder extends Worker{
         this.makes = "constructions";
         //Yellow
         this.color = new Color(190, 200, 0);
-        this.name = "Worker3.png";
+        this.setSprite("Worker3.png");
     }
 }

@@ -12,15 +12,13 @@ public class SimulationObject {
     protected int x;
     protected int y;
     protected Color color;
-    protected String name;
-    
+
     public SimulationObject()
     {
         Random r = new Random();
         this.x = (int)(r.nextDouble()*Reference.COLS);
         this.y = (int)(r.nextDouble()*Reference.ROWS);
         this.color = Color.RED;
-        this.name = "";
     }
 
     public SimulationObject(int x,int y)
@@ -42,20 +40,6 @@ public class SimulationObject {
             Reference.PIXEL_SIZE,
             Reference.PIXEL_SIZE
         );
-    }
-    
-    public void drawWorker(Graphics2D g2) {
-    	BufferedImage img = null;
-
-    	try 
-    	{
-    	    img = ImageIO.read(new File(name)); 
-    	} 
-    	catch (IOException e) 
-    	{
-    	    e.printStackTrace();
-    	}
-    	g2.drawImage(img, null, x*Reference.PIXEL_SIZE, y*Reference.PIXEL_SIZE);
     }
 
     public boolean isNear(SimulationObject obj)
