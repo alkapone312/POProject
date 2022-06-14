@@ -120,6 +120,10 @@ public class Factory extends JPanel {
         return this.g2;
     }
 
+    private void endSimulation() {
+        System.out.println("STOP");
+    }
+
     private void updateMagazine(Worker worker) {
         switch (worker.makes) {
             case "constructions":
