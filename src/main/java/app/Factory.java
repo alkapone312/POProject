@@ -120,13 +120,13 @@ public class Factory extends JPanel {
             if(machine.isBroken()) {
                 machine.payForRepair();
                 machine.repair();
+                this.updateLabels();
             }
         }
         if(Factory.dayTime%this.chartRefreshingRate == 0) {
             this.chart.addValue("Factory daytime", (double)Factory.dayTime);
             this.chart.addValue("Average sanity", (double)averageSanity);
             this.chart.addValue("Average time per product", 1/averageEfficiency);
-
             this.chart.graphCharts();
         }
         Factory.dayTime++;

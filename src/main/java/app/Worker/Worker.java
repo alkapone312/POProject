@@ -225,13 +225,7 @@ public class Worker extends SimulationObject {
     }
 
     private void handleProduct() {
-        if(isNear(this.workstand))
-            if(this.workstand.isProductDone()) {
-                this.hasItem = true;
-                this.workstand.createNewProduct();
-            }
-
-        if(this.getClass().getSimpleName() == "Fitter") {
+        if(this.getClass() == (new Fitter()).getClass()) {
             if(Factory.screws > 1 && Factory.constructions > 1 && isNear(this.workstand))
                 if(this.workstand.isProductDone()) {
                     this.hasItem = true;
@@ -240,6 +234,12 @@ public class Worker extends SimulationObject {
                     Factory.constructions--;
                 }
         }
+        else
+            if(isNear(this.workstand))
+                if(this.workstand.isProductDone()) {
+                    this.hasItem = true;
+                    this.workstand.createNewProduct();
+                }
     }
 
     private void handleSanity() {
