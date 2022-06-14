@@ -44,8 +44,10 @@ public class Factory extends JPanel {
         this.buffer = new BufferedImage(Reference.WIDTH, Reference.HEIGHT, BufferedImage.TYPE_INT_RGB);
         this.g2 = buffer.createGraphics();
         this.chart = new Chart();
+        this.chart.addChart("Budget", 0.0, 100000.0);
         this.chart.addChart("Factory daytime", 0.0, 8000.0);
         this.chart.addChart("Average sanity", 0.0, 4000.0);
+        this.chart.addChart("Average time per product", 0.0, 10.0);
 
         //init all simulation
         this.initFactoryFields();
@@ -76,6 +78,7 @@ public class Factory extends JPanel {
             Factory.dayTime = 0;
             Factory.day++;
             this.market.update();
+            this.chart.addValue("Budget", Factory.budget);
         }
 
         if(Factory.day%7 == 0 && Factory.day!=0 && Factory.dayTime==7999) {
@@ -91,6 +94,7 @@ public class Factory extends JPanel {
         this.map.draw(g2);
 
         int averageSanity = 0;
+        double averageEfficiency = 0.0;
         for (Worker worker : this.workers) {
 
             HR.workerRoutine(worker);
@@ -102,9 +106,11 @@ public class Factory extends JPanel {
                 worker.revertMove();
 
             averageSanity += worker.getSanity();
+            averageEfficiency += worker.getEfficiency();
             worker.draw(g2);
         }
         averageSanity /= workers.size();
+        averageEfficiency /= workers.size();
 
         for (Machine machine : this.machines) {
             if (!machine.getWorker().hasItem)
@@ -119,6 +125,8 @@ public class Factory extends JPanel {
         if(Factory.dayTime%this.chartRefreshingRate == 0) {
             this.chart.addValue("Factory daytime", (double)Factory.dayTime);
             this.chart.addValue("Average sanity", (double)averageSanity);
+            this.chart.addValue("Average time per product", 1/averageEfficiency);
+
             this.chart.graphCharts();
         }
         Factory.dayTime++;

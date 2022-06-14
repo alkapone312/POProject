@@ -269,6 +269,10 @@ public class Worker extends SimulationObject {
             this.sanity = this.maxsanity;
         }
         this.efficiency = (double)this.sanity/(double)this.maxsanity;
+        if(this.efficiency < 0.1)
+        {
+            this.efficiency = 0.1;
+        }
 
     }
 
