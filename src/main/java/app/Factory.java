@@ -2,14 +2,13 @@ package app;
 
 import app.Machine.*;
 import app.Utils.HR;
-import app.Utils.PerlinNoise;
 import app.Worker.*;
+import chart.Chart;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Factory extends JPanel {
     public ArrayList<Worker> workers;
@@ -32,6 +31,8 @@ public class Factory extends JPanel {
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
     private Graphics2D g2;
+    private Chart chart;
+    private int chartRefreshingRate = 8;
 
     private Map map;
 
@@ -39,6 +40,9 @@ public class Factory extends JPanel {
         //Creates buffer and graphics context for drawing
         this.buffer = new BufferedImage(Reference.WIDTH, Reference.HEIGHT, BufferedImage.TYPE_INT_RGB);
         this.g2 = buffer.createGraphics();
+        this.chart = new Chart();
+        this.chart.addChart("Factory daytime", 0, 8000);
+        this.chart.addChart("Average sanity", 0, 4000);
 
         //init all simulation
         this.initFactoryFields();
@@ -70,6 +74,7 @@ public class Factory extends JPanel {
 
         this.map.draw(g2);
 
+        int averageSanity = 0;
         for (Worker worker : this.workers) {
 
             HR.workerRoutine(worker);
@@ -80,15 +85,21 @@ public class Factory extends JPanel {
             if(worker.getX() > Reference.COLS-1 || worker.getY() > Reference.ROWS-1 || map.getCharAtPos(worker.getX(), worker.getY()) == 'a')
                 worker.revertMove();
 
+            averageSanity += worker.getSanity();
             worker.draw(g2);
         }
+        averageSanity /= workers.size();
 
         for (Machine machine : this.machines) {
             if (!machine.getWorker().hasItem)
                 machine.update();
             machine.draw(g2);
         }
-
+        if(Factory.dayTime%this.chartRefreshingRate == 0) {
+            this.chart.addValue("Factory daytime", Factory.dayTime);
+            this.chart.addValue("Average sanity", averageSanity);
+            this.chart.graphCharts();
+        }
         Factory.dayTime++;
         repaint();
     }
@@ -138,6 +149,24 @@ public class Factory extends JPanel {
 
     private void setStartingWorkstations() {
         //assign starting workers and machines
+        this.workers.add(new Turner());
+        this.workers.add(new Welder());
+        this.workers.add(new Fitter());
+        this.machines.add(new Lathe());
+        this.machines.add(new WeldingMachine());
+        this.machines.add(new AssemblyTable());
+        this.workers.add(new Turner());
+        this.workers.add(new Welder());
+        this.workers.add(new Fitter());
+        this.machines.add(new Lathe());
+        this.machines.add(new WeldingMachine());
+        this.machines.add(new AssemblyTable());
+        this.workers.add(new Turner());
+        this.workers.add(new Welder());
+        this.workers.add(new Fitter());
+        this.machines.add(new Lathe());
+        this.machines.add(new WeldingMachine());
+        this.machines.add(new AssemblyTable());
         this.workers.add(new Turner());
         this.workers.add(new Welder());
         this.workers.add(new Fitter());
