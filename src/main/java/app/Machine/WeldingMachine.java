@@ -7,6 +7,6 @@ public class WeldingMachine extends Machine{
     {
         //dark yellow
         this.color = new Color(120,130,0);
-        Machine.setPrice(150);
+        Machine.setPrice(2000);
     }
 }

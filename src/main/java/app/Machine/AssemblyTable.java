@@ -6,7 +6,7 @@ public class AssemblyTable extends Machine{
     public AssemblyTable()
     {
         //dark red
-        this.color = new Color(150,20,0);
-        Machine.setPrice(100);
+        this.color = new Color(200,20,0);
+        Machine.setPrice(500);
     }
 }

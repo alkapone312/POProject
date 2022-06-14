@@ -7,6 +7,6 @@ public class Lathe extends Machine{
     {
         //dark blue
         this.color = new Color(1,9,106);
-        Machine.setPrice(120);
+        Machine.setPrice(1000);
     }
 }
