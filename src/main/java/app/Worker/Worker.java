@@ -181,7 +181,13 @@ public class Worker extends SimulationObject {
         return this.isTired;
     }
 
-    public double getEfficiency(){ return this.efficiency; }
+    public double getEfficiency(){
+        return this.efficiency;
+    }
+
+    public int getSanity() {
+        return this.sanity;
+    }
 
     public boolean isHangingAround() {
         return this.isHangingAround;
@@ -258,7 +264,6 @@ public class Worker extends SimulationObject {
             this.sanity = this.maxsanity;
         }
         this.efficiency = (double)this.sanity/(double)this.maxsanity;
-
 
     }
 
