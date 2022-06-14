@@ -42,8 +42,8 @@ public class Factory extends JPanel {
         this.buffer = new BufferedImage(Reference.WIDTH, Reference.HEIGHT, BufferedImage.TYPE_INT_RGB);
         this.g2 = buffer.createGraphics();
         this.chart = new Chart();
-        this.chart.addChart("Factory daytime", 0, 8000);
-        this.chart.addChart("Average sanity", 0, 4000);
+        this.chart.addChart("Factory daytime", 0.0, 8000.0);
+        this.chart.addChart("Average sanity", 0.0, 4000.0);
 
         //init all simulation
         this.initFactoryFields();
@@ -59,8 +59,7 @@ public class Factory extends JPanel {
 
     public void draw(Graphics2D g2) {
         if (Factory.dayTime == 1) {
-
-        	if(budget<=0) {endSimulation();}
+        	if(Factory.budget<=0) {endSimulation();}
 
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, Reference.WIDTH, Reference.HEIGHT);
@@ -74,13 +73,17 @@ public class Factory extends JPanel {
         if(Factory.dayTime > 8000) {
             Factory.dayTime = 0;
             Factory.day++;
-            HireWorkerAddMachine();
+            this.market.update();
         }
 
-        if(Factory.day==1) { //currently set to day 1 for tests/balance proper is : 'if(Factory.day%7==0 && FActory.day != 0)'
+        if(Factory.day%7 == 0 && Factory.day!=0 && Factory.dayTime==7999) {
         	PayWorkers();
+            HireWorkerAddMachine();
         	market.sell();
-        	market.buy();
+            System.out.println("Selling products, budget after sell: " + Factory.budget);
+        	market.buy(this.machines.size());
+            System.out.println("Buying materials, budget after buying: " + Factory.budget);
+            this.updateLabels();
         }
 
         this.map.draw(g2);
@@ -107,8 +110,8 @@ public class Factory extends JPanel {
             machine.draw(g2);
         }
         if(Factory.dayTime%this.chartRefreshingRate == 0) {
-            this.chart.addValue("Factory daytime", Factory.dayTime);
-            this.chart.addValue("Average sanity", averageSanity);
+            this.chart.addValue("Factory daytime", (double)Factory.dayTime);
+            this.chart.addValue("Average sanity", (double)averageSanity);
             this.chart.graphCharts();
         }
         Factory.dayTime++;
@@ -183,7 +186,7 @@ public class Factory extends JPanel {
     }
 
     private void HireWorkerAddMachine() {
-        if(budget >= 1800) {
+        if(Factory.budget > 1800) {
             int leastItems = Factory.screws;
             int item = 1;
             if(Factory.constructions < leastItems) {
@@ -194,37 +197,49 @@ public class Factory extends JPanel {
                 leastItems = Factory.products;
                 item = 3;
             }
+
+            Worker newWorker = null;
+            Machine newMachine = null;
         	switch(item) {
-        	case 0:
-        		this.workers.add(new Turner());
-        		this.machines.add(new Lathe());
-        		budget = budget - Lathe.getPrice();
-        		break;
         	case 1:
-        		this.workers.add(new Welder());
-        		this.machines.add(new WeldingMachine());
-        		budget = budget - WeldingMachine.getPrice();
+        		newWorker = new Turner();
+        		newMachine = new Lathe();
+        		Factory.budget = Factory.budget - Lathe.getPrice();
         		break;
         	case 2:
-        		this.workers.add(new Fitter());
-        		this.machines.add(new AssemblyTable());
-        		budget = budget - AssemblyTable.getPrice();
+        		newWorker = new Welder();
+        		newMachine = new WeldingMachine();
+        		Factory.budget = Factory.budget - WeldingMachine.getPrice();
         		break;
+        	case 3:
+        		newWorker = new Fitter();
+        		newMachine = new AssemblyTable();
+        		Factory.budget = Factory.budget - AssemblyTable.getPrice();
+        		break;
+            default:
+                break;
         	}
-        		Machine machine = machines.get(machines.size()-1);
+
+            if(newWorker != null && newMachine != null) {
                 int z = this.map.machinesOcupiedCoordinates.getFirstFreeCoordinates().getFirst();
                 int y = this.map.machinesOcupiedCoordinates.getFirstFreeCoordinates().getSecond();
                 this.map.machinesOcupiedCoordinates.setFirstFreeCoordinatesOcupied();
-                machine.setX(z).setY(y);
-            for (int j = 0; j < this.workers.size(); j++) {
-                HR.setWorkstand(this.workers.get(j), this.machines.get(j));
+                newMachine.setX(z).setY(y);
+                HR.setWorkstand(newWorker, newMachine);
+                this.workers.add(newWorker);
+                this.machines.add(newMachine);
+
+                System.out.println("Hired new worker: " + newWorker.getClass().getSimpleName());
+                System.out.println("Buyed new machine: " + newMachine.getClass().getSimpleName() + " for price: " + newMachine.getPrice());
+                System.out.println("Budget: " + Factory.budget);
             }
         }
     }
 
     private void PayWorkers() {
     	for(Worker worker : workers) {
-    		budget = budget-worker.getSalary();
+    		Factory.budget = Factory.budget-worker.getSalary();
+            System.out.println("Paying worker: " + worker.getSalary() + " Budget left: " + Factory.budget);
     	}
     }
 
@@ -285,10 +300,12 @@ public class Factory extends JPanel {
         labels.get(3).setText("Current Budget: " + Factory.budget);
         labels.get(4).setText("Total Products Sold:: " + market.Totalsold);
     }
+
     public static double getBudget() {
-    	return budget;
+    	return Factory.budget;
     }
+
     public static void setBudget(double x) {
-    	budget = x;
+    	Factory.budget = x;
     }
 }
