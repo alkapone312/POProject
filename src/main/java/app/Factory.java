@@ -27,7 +27,7 @@ public class Factory extends JPanel {
     public static ArrayList<ControlPoint> socialEntrancePath;
 
     private int social;
-    private static double budget = 2500;
+    public static double budget = 2500;
     private boolean worktime = true;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
