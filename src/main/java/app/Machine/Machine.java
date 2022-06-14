@@ -9,7 +9,7 @@ public class Machine extends SimulationObject {
     private int healthPoints;
     private int progress;
     private double maxProgress = 100;
-    private int price;
+    private static int price;
     protected Worker worker;
     private Random r = new Random();
     public Machine() {
@@ -23,8 +23,12 @@ public class Machine extends SimulationObject {
         this.maxProgress = 100/this.worker.getEfficiency();
     }
 
-    public void getPrice() {
-
+    public static int getPrice() {
+    	return price;
+    }
+    
+    public static void setPrice(int x) {
+    	price = x;
     }
 
     public void payForRepair() {

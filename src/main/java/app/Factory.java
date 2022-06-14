@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Factory extends JPanel {
     public ArrayList<Worker> workers;
@@ -27,13 +28,14 @@ public class Factory extends JPanel {
     public static ArrayList<ControlPoint> socialEntrancePath;
 
     private int social;
-    private static double budget;
+    private static double budget = 2500;
     private boolean worktime = true;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
     private Graphics2D g2;
 
     private Map map;
+    private Market m = new Market();
 
     public Factory() {
         //Creates buffer and graphics context for drawing
@@ -54,6 +56,9 @@ public class Factory extends JPanel {
 
     public void draw(Graphics2D g2) {
         if (Factory.dayTime == 1) {
+        	
+        	if(budget<=0) {EndSimulation();}
+        	
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, Reference.WIDTH, Reference.HEIGHT);
             g2.setColor(Color.WHITE);
@@ -66,6 +71,13 @@ public class Factory extends JPanel {
         if(Factory.dayTime > 8000) {
             Factory.dayTime = 0;
             Factory.day++;
+            HireWorkerAddMachine();
+        }
+        
+        if(Factory.day==1) { //currently set to day 1 for tests/balance proper is : 'if(Factory.day%7==0 && FActory.day != 0)'
+        	PayWorkers();
+        	m.sell();
+        	m.buy();
         }
 
         this.map.draw(g2);
@@ -155,6 +167,56 @@ public class Factory extends JPanel {
             HR.setWorkstand(this.workers.get(i), this.machines.get(i));
         }
     }
+    
+    private void HireWorkerAddMachine() {
+    	
+    	Random r = new Random();
+    	int x = r.nextInt()%2;
+    	int i = x+1;
+    	
+        if(budget >= 1800) {
+        	switch(i) {
+        	case 0:
+        		this.workers.add(new Turner());
+        		this.machines.add(new Lathe());
+        		budget = budget - Lathe.getPrice();
+        		break;
+        	case 1:
+        		this.workers.add(new Welder());
+        		this.machines.add(new WeldingMachine());
+        		budget = budget - WeldingMachine.getPrice();
+        		break;
+        	case 2:
+        		this.workers.add(new Fitter());
+        		this.machines.add(new AssemblyTable());
+        		budget = budget - AssemblyTable.getPrice();
+        		break;
+        	}
+        		Machine machine = machines.get(machines.size()-1);
+                int z = this.map.machinesOcupiedCoordinates.getFirstFreeCoordinates().getFirst();
+                int y = this.map.machinesOcupiedCoordinates.getFirstFreeCoordinates().getSecond();
+                this.map.machinesOcupiedCoordinates.setFirstFreeCoordinatesOcupied();
+                machine.setX(z).setY(y);
+            for (int j = 0; j < this.workers.size(); j++) {
+                HR.setWorkstand(this.workers.get(j), this.machines.get(j));
+            }
+        }
+    }
+    
+    private void PayWorkers() {
+    	for(int i = workers.size();i>=0;i--) {
+    		budget = budget-50;
+    	}
+    }
+    
+    private void EndSimulation() {
+    	//TODO - the bad ending
+    }
+    
+   
+    
+    
+    
 
     private void setControlPoints() {
         //add control points in various places of factory
@@ -196,6 +258,8 @@ public class Factory extends JPanel {
         this.labels.add(new JLabel("Number of screws: " + Factory.screws));
         this.labels.add(new JLabel("Number of constructions: " + Factory.constructions));
         this.labels.add(new JLabel("Number of products: " + Factory.products));
+        this.labels.add(new JLabel("Current budget: " + Factory.budget));
+        this.labels.add(new JLabel("Total Products Sold: " + m.Totalsold));
 
         for (int i = 0; i < this.labels.size(); i++) {
             this.labels.get(i).setBounds(0, 40 * i, Reference.WIDTH, Reference.HEIGHT);
@@ -208,6 +272,8 @@ public class Factory extends JPanel {
         labels.get(0).setText("Number of screws: " + Factory.screws);
         labels.get(1).setText("Number of constructions: " + Factory.constructions);
         labels.get(2).setText("Number of products: " + Factory.products);
+        labels.get(3).setText("Current Budget: " + Factory.budget);
+        labels.get(4).setText("Total Products Sold:: " + m.Totalsold);
     }
     public static double getBudget() {
     	return budget;
