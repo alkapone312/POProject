@@ -51,6 +51,7 @@ public class Worker extends SimulationObject {
         this.sanity = 4000;
         this.maxsanity = this.sanity;
         this.efficiency = 1.0;
+        this.salary = 2000;
     }
 
     //all worker logic here
@@ -187,6 +188,10 @@ public class Worker extends SimulationObject {
 
     public int getSanity() {
         return this.sanity;
+    }
+
+    public int getSalary() {
+        return this.salary;
     }
 
     public boolean isHangingAround() {

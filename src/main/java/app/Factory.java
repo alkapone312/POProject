@@ -2,7 +2,6 @@ package app;
 
 import app.Machine.*;
 import app.Utils.HR;
-import app.Utils.PerlinNoise;
 import app.Worker.*;
 import chart.Chart;
 
@@ -27,7 +26,7 @@ public class Factory extends JPanel {
     public static ArrayList<ControlPoint> socialEntrancePath;
 
     private int social;
-    private static double budget = 2500;
+    private static double budget = 10000;
     private boolean worktime = true;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
@@ -36,7 +35,7 @@ public class Factory extends JPanel {
     private int chartRefreshingRate = 8;
 
     private Map map;
-    private Market m = new Market();
+    private Market market = new Market();
 
     public Factory() {
         //Creates buffer and graphics context for drawing
@@ -80,8 +79,8 @@ public class Factory extends JPanel {
 
         if(Factory.day==1) { //currently set to day 1 for tests/balance proper is : 'if(Factory.day%7==0 && FActory.day != 0)'
         	PayWorkers();
-        	m.sell();
-        	m.buy();
+        	market.sell();
+        	market.buy();
         }
 
         this.map.draw(g2);
@@ -184,13 +183,18 @@ public class Factory extends JPanel {
     }
 
     private void HireWorkerAddMachine() {
-
-    	Random r = new Random();
-    	int x = r.nextInt()%2;
-    	int i = x+1;
-
         if(budget >= 1800) {
-        	switch(i) {
+            int leastItems = Factory.screws;
+            int item = 1;
+            if(Factory.constructions < leastItems) {
+                leastItems = Factory.constructions;
+                item = 2;
+            }
+            if(Factory.products < leastItems) {
+                leastItems = Factory.products;
+                item = 3;
+            }
+        	switch(item) {
         	case 0:
         		this.workers.add(new Turner());
         		this.machines.add(new Lathe());
@@ -219,19 +223,10 @@ public class Factory extends JPanel {
     }
 
     private void PayWorkers() {
-    	for(int i = workers.size();i>=0;i--) {
-    		budget = budget-50;
+    	for(Worker worker : workers) {
+    		budget = budget-worker.getSalary();
     	}
     }
-
-    private void EndSimulation() {
-    	//TODO - the bad ending
-    }
-
-
-
-
-
 
     private void setControlPoints() {
         //add control points in various places of factory
@@ -274,7 +269,7 @@ public class Factory extends JPanel {
         this.labels.add(new JLabel("Number of constructions: " + Factory.constructions));
         this.labels.add(new JLabel("Number of products: " + Factory.products));
         this.labels.add(new JLabel("Current budget: " + Factory.budget));
-        this.labels.add(new JLabel("Total Products Sold: " + m.Totalsold));
+        this.labels.add(new JLabel("Total Products Sold: " + market.Totalsold));
 
         for (int i = 0; i < this.labels.size(); i++) {
             this.labels.get(i).setBounds(0, 40 * i, Reference.WIDTH, Reference.HEIGHT);
@@ -288,7 +283,7 @@ public class Factory extends JPanel {
         labels.get(1).setText("Number of constructions: " + Factory.constructions);
         labels.get(2).setText("Number of products: " + Factory.products);
         labels.get(3).setText("Current Budget: " + Factory.budget);
-        labels.get(4).setText("Total Products Sold:: " + m.Totalsold);
+        labels.get(4).setText("Total Products Sold:: " + market.Totalsold);
     }
     public static double getBudget() {
     	return budget;
