@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class Chart extends JFrame {
     private ArrayList<String> chartNames;
-    private ArrayList<ArrayList<Integer>> chartData;
-    private ArrayList<Pair<Integer, Integer>> chartRange;
+    private ArrayList<ArrayList<Double>> chartData;
+    private ArrayList<Pair<Double, Double>> chartRange;
     private ChartDrawer chartDrawer;
 
     public Chart() {
@@ -31,13 +31,13 @@ public class Chart extends JFrame {
         this.chartRange = new ArrayList<>();
     }
 
-    public void addChart(String name, int minRange, int maxRange) {
+    public void addChart(String name, Double minRange, Double maxRange) {
         this.chartNames.add(name);
-        this.chartData.add(new ArrayList<Integer>());
-        this.chartRange.add(new Pair<Integer, Integer>(minRange, maxRange));
+        this.chartData.add(new ArrayList<Double>());
+        this.chartRange.add(new Pair<Double, Double>(minRange, maxRange));
     }
 
-    public void addValue(String name, Integer value) {
+    public void addValue(String name, Double value) {
         for(int i = 0 ; i < chartNames.size(); i++) {
             if(chartNames.get(i) == name) {
                 this.chartData.get(i).add(value);

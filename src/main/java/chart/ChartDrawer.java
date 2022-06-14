@@ -22,21 +22,29 @@ public class ChartDrawer extends JPanel {
         g.drawImage(this.buffer, 0, 0, null);
     }
 
-    public void drawChart(int index, ArrayList<Integer> values, Pair<Integer, Integer> rangeVal, String name) {
+    public void drawChart(int index, ArrayList<Double> values, Pair<Double, Double> rangeVal, String name) {
         this.g2.setColor(Color.BLACK);
         this.g2.fillRect(0,(index-1)*100, this.buffer.getWidth(), index*100);
         this.g2.setColor(Color.GREEN);
+
+        Double y;
+        Double lastX;
+        Double lastY;
+        lastX=0.0;
+        lastY=0.0;
         for(int x = 0 ; x < values.size(); x++) {
-            int y = this.map(values.get(x), rangeVal.getFirst(), rangeVal.getSecond(), 0, 100);
-            g2.fillRect(x, index*100-1-y, 2, 2);
+            y=map(values.get(x), rangeVal.getFirst(), rangeVal.getSecond(), 0.0, 100.0);;
+            g2.drawLine(x, index*100, x, (int)(index*100-1-y));
             if(x > 400)
                 values.remove(values.get(0));
+            lastX=(double)x;
+            lastY=y;
         }
         this.g2.setColor(Color.WHITE);
         this.g2.drawString(name, 0, (index-1)*100+20);
     }
 
-    private int map(int x, int in_min, int in_max, int out_min, int out_max)
+    private Double map(Double x, Double in_min, Double in_max, Double out_min, Double out_max)
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
