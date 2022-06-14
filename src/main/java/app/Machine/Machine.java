@@ -12,7 +12,7 @@ public class Machine extends SimulationObject {
     private static int price;
     protected Worker worker;
     private Random r = new Random();
-    private int healthPoints = r.nextInt(50000) + 75000;
+    private int healthPoints = r.nextInt(50000) + 40000;
     private boolean isBroken = false;
     public Machine() {
         this.worker = new Worker();
@@ -45,7 +45,7 @@ public class Machine extends SimulationObject {
 
     public void repair() {
         this.isBroken = false;
-        this.healthPoints = r.nextInt(50000) + 75000;
+        this.healthPoints = r.nextInt(50000) + 40000;
         System.out.println("Machine " + this.getClass().getSimpleName() + " is broken. Repairing machine for 2500. Budget after repair: " + Factory.budget);
     }
 
