@@ -28,7 +28,7 @@ public class Factory extends JPanel {
     public static ArrayList<ControlPoint> socialEntrancePath;
 
     private int social;
-    public static double budget = 2500;
+    public static double budget = 10000;
     private boolean worktime = true;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
@@ -110,6 +110,11 @@ public class Factory extends JPanel {
             if (!machine.getWorker().hasItem)
                 machine.update();
             machine.draw(g2);
+
+            if(machine.isBroken()) {
+                machine.payForRepair();
+                machine.repair();
+            }
         }
         if(Factory.dayTime%this.chartRefreshingRate == 0) {
             this.chart.addValue("Factory daytime", (double)Factory.dayTime);

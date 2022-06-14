@@ -46,6 +46,7 @@ public class Machine extends SimulationObject {
     public void repair() {
         this.isBroken = false;
         this.healthPoints = r.nextInt(50000) + 75000;
+        System.out.println("Machine " + this.getClass().getSimpleName() + " is broken. Repairing machine for 2500. Budget after repair: " + Factory.budget);
     }
 
     public boolean isProductDone() {
@@ -53,6 +54,10 @@ public class Machine extends SimulationObject {
             return true;
         }
         return false;
+    }
+
+    public boolean isBroken() {
+        return this.isBroken;
     }
 
     public void createNewProduct() {
