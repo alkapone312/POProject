@@ -2,6 +2,7 @@ package app;
 
 import app.Machine.*;
 import app.Utils.HR;
+import app.Utils.PerlinNoise;
 import app.Worker.*;
 import chart.Chart;
 
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Factory extends JPanel {
     public ArrayList<Worker> workers;
@@ -26,7 +28,7 @@ public class Factory extends JPanel {
     public static ArrayList<ControlPoint> socialEntrancePath;
 
     private int social;
-    private static double budget = 10000;
+    public static double budget = 2500;
     private boolean worktime = true;
     private ArrayList<JLabel> labels;
     private BufferedImage buffer;
